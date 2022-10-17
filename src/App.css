@@ -19,23 +19,78 @@ fieldset.fieldset-car-info-inner {
   padding: 20px 20px 0 20px;
   border-radius: 15px;
   display: inline;
-  background-color: #FCCF47;
+  background-color: cornflowerblue;
+}
+
+fieldset.fieldset-login {
+  position: absolute;
+  top: 25%;
+  left: 30%;
+  /*padding: 60px 60px 0 20px;*/
+  border-radius: 15px;
+  display: inline;
+  background-color: cornflowerblue;
+}
+
+.fieldset-car-details {
+  position: absolute;
+  top: 25%;
+  left: 20%;
+  /*padding: 60px 60px 0 20px;*/
+  border-radius: 15px;
+  display: inline;
+  background-color: cornflowerblue;
 }
 
 .fieldset-car-info-outer {
   border-radius: 15px;
 }
 
+.table-row-link {
+  cursor: pointer;
+  opacity: 80%;
+}
+
+.table-row-link:hover {
+  opacity: 100%;
+}
+
+.car-table {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  border-radius: 15px;
+  display: inline;
+}
+
 .inline-span {
   display:inline-block
 }
 
-.left {
+.left, div.left {
   float:left;
 }
 
 .right {
   float:right;
+}
+
+.right-margin {
+  position: relative;
+  width: 1000px;
+  float: right;
+  cursor: pointer;
+
+}
+
+.right-margin:hover {
+  margin-right: -15px;
+  transition: 1s;
+}
+
+.logo-rotate:hover {
+  rotate: 360deg;
+  transition: rotate 1s;
 }
 
 .text-shadow {
@@ -63,10 +118,17 @@ input#input-file + label:hover {
   cursor: pointer;
 }
 
+.login-input {
+  border-radius: 5px;
+}
+
 .submit-new-car-button {
   position: absolute;
   top: 3%;
   right: -47%;
+}
+span.car-details-span {
+  float: left;
 }
 
 footer {

@@ -6,6 +6,9 @@ import FooterComponent from "./components/FooterComponent";
 import BuyCarComponent from "./components/BuyCarComponent";
 import SellCarComponent from "./components/SellCarComponent";
 import ArticlesCarComponent from "./components/ArticlesCarComponent";
+import LoginComponent from "./components/LoginComponent";
+import RegisterComponent from "./components/RegisterComponent";
+import CarDetailsComponent from "./components/CarDetailsComponent";
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
             <Route path="/buy-car" element={<BuyCarComponent/>}></Route>
             <Route path="/sell-car" element={<SellCarComponent/>}></Route>
             <Route path="/articles" element={<ArticlesCarComponent/>}></Route>
+            <Route path="/login" element={<LoginComponent/>}></Route>
+            <Route path="/registration" element={<RegisterComponent/>}></Route>
+            <Route path="/show-car-details/:carId" element={<CarDetailsComponent/>}></Route>
           </Routes>
         </div>
         {/*<FooterComponent/>*/}
