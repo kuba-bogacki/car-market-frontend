@@ -1,0 +1,25 @@
+.buy-car-div-component {
+    background-color: #aaa;
+    margin: 7rem 2.5rem 2rem 2.5rem;
+    height: 35rem;
+    border-radius: 4px;
+}
+
+.table-div-inner {
+    background-color: #aaa;
+    height: 15rem;
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 4px;
+}
+
+.buy-car-header {
+    padding-top: 2rem;
+}
+
+.table-row-link {
+    cursor: pointer;
+}
+
+.table-row-link:hover {
+    background-color: #808085;
+}

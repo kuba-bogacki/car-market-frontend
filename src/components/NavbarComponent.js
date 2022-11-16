@@ -1,72 +1,106 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import {useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import CAR_LOGO from "../page-images/Car.png";
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SellIcon from '@mui/icons-material/Sell';
+import ArticleIcon from '@mui/icons-material/Article';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import PersonIcon from '@mui/icons-material/Person';
+import CAR_LOGO from "../page-images/Car-logo.png";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import AuthService from "../service/AuthenticationService";
+import '../styles/NavbarComponentStyle.css';
 
 function NavbarComponent() {
 
   const navigate = useNavigate();
-
-  const [shouldRedirectToBuyCar, setShouldRedirectToBuyCar] = useState(false);
-  const [shouldRedirectToSellCar, setShouldRedirectToSellCar] = useState(false);
-  const [shouldRedirectToShowArticles, setShouldRedirectToShowArticles] = useState(false);
+  const [currentLoggedCustomer, setCurrentLoggedCustomer] = useState(null);
+  const [buttonClassName, setButtonClassName] = useState("fas fa-bars");
+  const [listClassName, setListClassName] = useState("nav-menu");
+  const [openMenuIcon, setOpenMenuIcon] = useState(true);
 
   useEffect(() => {
-    if (shouldRedirectToBuyCar) {
-      navigate('/buy-car');
-    }
-    if (shouldRedirectToSellCar) {
-      navigate('/sell-car');
-    }
-    if (shouldRedirectToShowArticles) {
-      navigate('/articles')
-    }
-  });
+    setCurrentLoggedCustomer(AuthService.getCurrentUser());
+  }, []);
+
+  const changeIconClassName = () => {
+    buttonClassName === "fas fa-bars" ?
+      setButtonClassName("fas fa-times") : setButtonClassName("fas fa-bars");
+    listClassName === "nav-menu active" ?
+      setListClassName("nav-menu") : setListClassName("nav-menu active");
+    openMenuIcon ? setOpenMenuIcon(false) : setOpenMenuIcon(true);
+  }
 
   const buyCar = () => {
-    setShouldRedirectToBuyCar(true);
-    setShouldRedirectToSellCar(false);
-    setShouldRedirectToShowArticles(false);
+    navigate('/buy-car');
   }
 
   const sellCar = () => {
-    setShouldRedirectToBuyCar(false);
-    setShouldRedirectToSellCar(true);
-    setShouldRedirectToShowArticles(false);
+    navigate('/sell-car');
   }
 
   const showArticles = () => {
-    setShouldRedirectToBuyCar(false);
-    setShouldRedirectToSellCar(false);
-    setShouldRedirectToShowArticles(true);
+    navigate('/articles');
+  }
+
+  const showCustomerProfile = () => {
+    navigate('/profile');
+  }
+
+  const loginPage = () => {
+    navigate('/login');
+  }
+
+  const logoutPage = () => {
+    AuthService.logout();
+    navigate('/');
+    window.location.reload();
   }
 
   return (
-    <div>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar className="navbar-menu">
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <a href="/"><img src={CAR_LOGO} width="40px" height="40px" alt="car-icon"/></a>
-            </IconButton>
-              <Button variant="contained" sx={{ mr: 0.02 }} onClick={buyCar}>Buy</Button>&nbsp;
-              <Button variant="contained" sx={{ mr: 0.02 }} onClick={sellCar}>Sell</Button>&nbsp;
-              <Button variant="contained" sx={{ mr: 0.02 }} onClick={showArticles}>News</Button>&nbsp;
-          </Toolbar>
-        </AppBar>
-      </Box>
-    </div>
+    <nav className="navbar-items">
+      <h1 className="car-logo-class">
+        <IconButton size="large" edge="start" color="inherit" aria-label="menu">
+          <a href="/"><img src={CAR_LOGO} width="50px" height="50px" alt="car-icon" className="logo-rotate"/></a>
+        </IconButton>Car Market
+      </h1>
+      <div className="menu-icons">
+        <Button className={buttonClassName} variant="contained" color="success" onClick={changeIconClassName}>
+          {openMenuIcon ? <MenuIcon/> : <CloseIcon/>}</Button>
+      </div>
+      <ul className={listClassName}>
+        <li>
+          <Button className="nav-links" variant="contained" color="success" onClick={buyCar}>
+            <ShoppingCartIcon/>Buy</Button>
+        </li>
+        <li>
+          <Button className="nav-links" variant="contained" color="success" onClick={sellCar}>
+            <SellIcon/>Sell</Button>
+        </li>
+        <li>
+          <Button className="nav-links" variant="contained" color="success" onClick={showArticles}>
+            <ArticleIcon/>News</Button>
+        </li>
+      {currentLoggedCustomer &&
+        <li>
+          <Button className="nav-links" variant="contained" color="success" onClick={showCustomerProfile}>
+            <PersonIcon/>Profile</Button>
+        </li>}
+        <li>
+          {currentLoggedCustomer === null ? (
+            <Button className="nav-links-mobile" variant="contained" color="error" onClick={loginPage}>
+              <LoginIcon/>Login</Button>
+          ) : (
+            <Button className="nav-links-mobile" variant="contained" color="error" onClick={logoutPage}>
+              <LogoutIcon/>Logout</Button>
+          )}
+        </li>
+      </ul>
+    </nav>
   );
 }
 

@@ -1,0 +1,43 @@
+.customer-profile-container {
+    background-color: #aaa;
+    margin: 7rem 8rem 2rem 8rem;
+    height: 31rem;
+    border-radius: 4px;
+}
+
+.customer-profile-header {
+    padding-top: 2rem;
+}
+
+.customer-profile-inner-div {
+    margin: 1rem 2rem 1rem 2rem ;
+    padding: 2rem 0.5rem 2rem 0.5rem;
+    height: 23.5rem;
+    border-radius: 4px;
+}
+
+.customer-profile-info-left {
+    background-color: #909090;
+    float: left;
+    margin-left: 1rem;
+    padding-top: 1.5rem;
+    height: 22rem;
+    width: 45%;
+    border-radius: 4px;
+}
+
+.customer-profile-info-right {
+    background-color: #909090;
+    float: right;
+    margin-right: 1rem;
+    padding-top: 1.5rem;
+    height: 22rem;
+    width: 45%;
+    border-radius: 4px;
+}
+
+.customer-profile-car-list-div {
+    margin: 1.5rem 1.5rem 1.5rem 1.5rem;
+    height: 16rem;
+    border-radius: 4px;
+}

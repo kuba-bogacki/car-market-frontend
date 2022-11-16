@@ -19,23 +19,64 @@ fieldset.fieldset-car-info-inner {
   padding: 20px 20px 0 20px;
   border-radius: 15px;
   display: inline;
-  background-color: #FCCF47;
+  background-color: cornflowerblue;
+}
+
+fieldset.fieldset-login {
+  position: absolute;
+  top: 25%;
+  left: 30%;
+  /*padding: 60px 60px 0 20px;*/
+  border-radius: 15px;
+  display: inline;
+  background-color: cornflowerblue;
+}
+
+.fieldset-car-details {
+  position: absolute;
+  top: 25%;
+  left: 20%;
+  /*padding: 60px 60px 0 20px;*/
+  border-radius: 15px;
+  display: inline;
+  background-color: cornflowerblue;
 }
 
 .fieldset-car-info-outer {
   border-radius: 15px;
 }
 
+.car-table {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  border-radius: 15px;
+  display: inline;
+}
+
 .inline-span {
   display:inline-block
 }
 
-.left {
+.left, div.left {
   float:left;
 }
 
 .right {
   float:right;
+}
+
+.right-margin {
+  position: relative;
+  width: 1000px;
+  float: right;
+  cursor: pointer;
+
+}
+
+.right-margin:hover {
+  margin-right: -15px;
+  transition: 1s;
 }
 
 .text-shadow {
@@ -45,22 +86,8 @@ fieldset.fieldset-car-info-inner {
   text-shadow: 2px 2px #585858;
 }
 
-input#input-file {
-  display: none;
-}
-
-input#input-file + label {
-  background-color: #24AFC1;
-  padding: 6px;
-  color: white;
-  border: 2px solid white;
+.login-input {
   border-radius: 5px;
-}
-
-input#input-file + label:hover {
-  background-color: #24AFC1B9;
-  border-color: #FFFFFF;
-  cursor: pointer;
 }
 
 .submit-new-car-button {
@@ -68,13 +95,6 @@ input#input-file + label:hover {
   top: 3%;
   right: -47%;
 }
-
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 25px;
-  background-color: #24AFC1;
-  text-align: center;
-  color: #FFFFFF;
+span.car-details-span {
+  float: left;
 }
