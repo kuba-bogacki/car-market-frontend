@@ -1,12 +1,11 @@
-import {Modal, TextField} from "@mui/material";
+import {LinearProgress, Modal, styled, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
-import axios from "axios";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
-const BASE_URL = "http://localhost:8080";
+import AuthService from "../service/AuthenticationService";
+import "../styles/LoginComponentStyle.css"
 
 const style = {
   position: 'absolute',
@@ -20,6 +19,23 @@ const style = {
   p: 4,
 };
 
+const CssTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: 'green',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: 'green',
+  },
+  '& .MuiOutlinedInput-root': {
+    '&:hover fieldset': {
+      borderColor: 'green',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'green',
+    },
+  },
+});
+
 function LoginComponent() {
 
   const navigate = useNavigate();
@@ -28,6 +44,7 @@ function LoginComponent() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [wrongCredentials, setWrongCredentials] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const directToRegistration = () => {
     navigate('/registration');
@@ -35,16 +52,18 @@ function LoginComponent() {
 
   const loginUser = (e) => {
     e.preventDefault();
-    let userData = {userEmail, userPassword};
-    console.log(userData);
-    axios.post(BASE_URL + "/login-customer", userData)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(response);
-          navigate('/');
-        } else {
-          openModal();
-        }
+    setLoading(true);
+
+    AuthService.login(userEmail, userPassword)
+      .then(() => {
+        setLoading(false);
+        navigate("/profile");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        openModal();
+        setLoading(false);
       })
   }
 
@@ -57,40 +76,26 @@ function LoginComponent() {
   }
 
   return (
-    <div>
-      <fieldset style={{ width: 460, height: 430, borderStyle: 'inset', textAlign: 'center' }} className="fieldset-login">
-        <h1 style={{color: '#F8F8F8', borderColor: 'black'}} className="text-shadow">Login page</h1><hr/>
-        <div style={{textAlign: 'center', paddingTop: '30px'}}>
-          <TextField
-            required onChange={(e) => {setUserEmail(e.target.value)}}
-            id="outlined-email-input"
-            label="E-mail"
-            type="email"
-            autoComplete="current-email"
-            style={inputStyle}
-            className="login-input"
-          /><br/><br/>
-          <TextField
-            required onChange={(e) => {setUserPassword(e.target.value)}}
-            id="outlined-password-input"
-            label="Password"
-            type="password"
-            autoComplete="current-password"
-            style={inputStyle}
-            className="login-input"
-          />
-        </div><br/>
-        <Button variant="contained" onClick={loginUser}>Login</Button>
-        <h4 className="text-shadow">Don’t have an account?</h4>
-        <Button variant="contained" onClick={directToRegistration}>Sign up</Button>
-      </fieldset>
+    <div className="login-page-div-class">
+      <div className="column">
+        <div className="login-header">
+          <h1>Login</h1>
+        </div>
+        <div className="login-body">
+          <CssTextField required onChange={(e) => {setUserEmail(e.target.value)}} id="outlined-email-input" label="E-mail"
+            type="email" autoComplete="current-email" style={inputStyle} className="login-input"/>
+          <CssTextField required onChange={(e) => {setUserPassword(e.target.value)}} id="outlined-password-input" label="Password"
+            type="password" autoComplete="password" style={inputStyle} className="login-input"/>
+          {loading ? (
+            <Box><LinearProgress color="success"/></Box>) : (<Button color="success" variant="contained" onClick={loginUser}>Login</Button>
+          )}
+          <h4>Don’t have an account?</h4>
+          <Button color="success" variant="contained" onClick={directToRegistration}>Sign up</Button>
+        </div>
+      </div>
       {wrongCredentials &&
-        <Modal
-          open={() => {openModal()}}
-          onClose={() => {closeModal()}}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+        <Modal open={() => {openModal()}} onClose={() => {closeModal()}}
+          aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Wrong credentials

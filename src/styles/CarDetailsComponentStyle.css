@@ -1,0 +1,99 @@
+.car-details-div {
+    background-color: #aaa;
+    margin: 7rem 8rem 2rem 8rem;
+    height: 31rem;
+    border-radius: 4px;
+}
+
+.car-details-header {
+    padding-top: 2rem;
+}
+
+.details-inner-div {
+    margin: 1rem 2rem 1rem 2rem ;
+    padding: 2rem 0.5rem 2rem 0.5rem;
+    height: 23.5rem;
+    border-radius: 4px;
+}
+
+.car-info-left {
+    background-color: #909090;
+    float: left;
+    margin-left: 1rem;
+    padding-top: 1.5rem;
+    height: 22rem;
+    width: 45%;
+    border-radius: 4px;
+}
+
+.car-info-right {
+    background-color: #909090;
+    float: right;
+    margin-right: 1rem;
+    padding-top: 1rem;
+    height: 22rem;
+    width: 45%;
+    border-radius: 4px;
+}
+
+.car-icons-details {
+    background-color: #a8a8a8;
+    float: left;
+    margin-left: 1rem;
+    height: 19rem;
+    width: 45%;
+    border-radius: 4px;
+}
+
+.car-icon-parameters {
+    background-color: #a8a8a8;
+    float: right;
+    margin-right: 1rem;
+    height: 19rem;
+    width: 45%;
+    border-radius: 4px;
+}
+
+.car-photo {
+    background-color: #a8a8a8;
+    float: right;
+    margin-right: 1rem;
+    padding-top: 0.5rem;
+    height: 16rem;
+    width: 93%;
+    border-radius: 4px;
+
+}
+
+.car-photo-inner {
+    width: 95%;
+    height: 95%;
+}
+
+.submit-button-div {
+    float: right;
+    margin-right: 1rem;
+    margin-top: 0.7rem;
+    height: 2rem;
+    width: 93%;
+    border-radius: 4px;
+}
+
+@media screen and (max-width: 1300px) {
+    .car-info-left {
+        width: 80%;
+        height: 80%;
+    }
+    .car-info-right {
+        width: 80%;
+        height: 80%;
+    }
+    .car-photo {
+        width: 80%;
+        height: 80%;
+    }
+    .car-photo-inner {
+        width: 80%;
+        height: 80%;
+    }
+}

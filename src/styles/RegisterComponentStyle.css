@@ -1,0 +1,23 @@
+.column {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    margin-top: -10rem;
+    margin-left: -10rem;
+    width: 20rem;
+    height: 27rem;
+    background-color: #aaa;
+    border-radius: 4px;
+}
+
+.register-header {
+    margin-top: 40px;
+}
+
+.register-body {
+    padding-top: 2rem;
+    display: grid;
+    row-gap: 10px;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
