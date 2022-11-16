@@ -20,6 +20,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import authHeader from "../service/AuthHeader";
 import "../styles/SellCarComponentStyle.css";
+import "../styles/CarDetailsComponentStyle.css";
 
 const BASE_URL = "http://localhost:8080";
 
