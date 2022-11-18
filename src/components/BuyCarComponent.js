@@ -14,6 +14,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import authHeader from "../service/AuthHeader";
 import "../styles/BuyCarComponentStyle.css"
+import Button from "@mui/material/Button";
 
 const BASE_URL = "http://localhost:8080";
 
@@ -36,6 +37,7 @@ function BuyCarComponent() {
 
   const [carsList, setCarsList] = useState([]);
   const [carsLoaded, setCarsLoaded] = useState(false);
+  const [sortedAsc, setSortedAsc] = useState(false);
 
   useEffect(() => {
     if (carsLoaded === false) {
@@ -48,9 +50,8 @@ function BuyCarComponent() {
       headers: customer
     })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
-          setCarsList(response.data);
+          setCarsList(response.data.reverse());
           setCarsLoaded(true);
         } else {
           alert("Can't load a cars!");
@@ -62,6 +63,32 @@ function BuyCarComponent() {
     navigate(`/show-car-details/${car.carId}`);
   }
 
+  const sortTable = (key) => {
+    const types = {
+      carId: 'carId',
+      carCompany: 'carCompany',
+      carModel: 'carModel',
+      carPrice: 'carPrice',
+      carPublished: 'carPublished'
+    };
+
+    const sortProperty = types[key];
+
+    if (sortedAsc === false) {
+      const ascendingCarsList = [...carsList].sort((a, b) =>
+        a[sortProperty] > b[sortProperty] ? 1 : -1,
+      );
+      setCarsList(ascendingCarsList);
+      setSortedAsc(true);
+    } else if (sortedAsc === true) {
+      const ascendingCarsList = [...carsList].sort((a, b) =>
+        a[sortProperty] > b[sortProperty] ? -1 : 1,
+      );
+      setCarsList(ascendingCarsList);
+      setSortedAsc(false);
+    }
+  }
+
   return (
     <div className="buy-car-div-component">
       <h1 className="buy-car-header">Cars for sale</h1><br/>
@@ -70,10 +97,21 @@ function BuyCarComponent() {
           <Table aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell align="center" style={fontStyle}><h3>Number</h3></StyledTableCell>
-                <StyledTableCell align="center" style={fontStyle}><h3>Company</h3></StyledTableCell>
-                <StyledTableCell align="center" style={fontStyle}><h3>Model</h3></StyledTableCell>
-                <StyledTableCell align="center" style={fontStyle}><h3>Price</h3></StyledTableCell>
+                <StyledTableCell align="center" style={fontStyle}>
+                  <h3>Number</h3><Button color="success" onClick={() => {sortTable("carId")}}>⇅</Button>
+                </StyledTableCell>
+                <StyledTableCell align="center" style={fontStyle}>
+                  <h3>Company</h3><Button color="success" onClick={() => {sortTable("carCompany")}}>⇅</Button>
+                </StyledTableCell>
+                <StyledTableCell align="center" style={fontStyle}>
+                  <h3>Model</h3><Button color="success" onClick={() => {sortTable("carModel")}}>⇅</Button>
+                </StyledTableCell>
+                <StyledTableCell align="center" style={fontStyle}>
+                  <h3>Price</h3><Button color="success" onClick={() => {sortTable("carPrice")}}>⇅</Button>
+                </StyledTableCell>
+                <StyledTableCell align="center" style={fontStyle}>
+                  <h3>Published</h3><Button color="success" onClick={() => {sortTable("carPublished")}}>⇅</Button>
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -83,6 +121,7 @@ function BuyCarComponent() {
                   <StyledTableCell align="center"><h4>{car.carCompany}</h4></StyledTableCell>
                   <StyledTableCell align="center"><h4>{car.carModel}</h4></StyledTableCell>
                   <StyledTableCell align="center"><h4>{car.carPrice + " $"}</h4></StyledTableCell>
+                  <StyledTableCell align="center"><h4>{car.carPublished}</h4></StyledTableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -20,7 +20,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import authHeader from "../service/AuthHeader";
 import "../styles/SellCarComponentStyle.css";
-import "../styles/CarDetailsComponentStyle.css";
+import {useNavigate} from "react-router-dom";
 
 const BASE_URL = "http://localhost:8080";
 
@@ -68,8 +68,9 @@ const style = {
 function SellCarComponent() {
 
   const customer = authHeader();
+  const navigate = useNavigate();
 
-  const [customerNotLoggedIn, setCustomerNotLoggedIn] = useState(false);
+  const [modalWindow, setModalWindow] = useState(false);
   const [carCompany, setCarCompany] = useState("");
   const [carModel, setCarModel] = useState("");
   const [carReleaseYear, setCarReleaseYear] = useState("");
@@ -80,6 +81,8 @@ function SellCarComponent() {
   const [crushed, setCrushed] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [carPhoto, setCarPhoto] = useState(DEFAULT_CAR);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalBody, setModalBody] = useState("");
 
   const fileSelectedHandler = (e) => {
     setCarPhoto(URL.createObjectURL(e.target.files[0]));
@@ -100,24 +103,32 @@ function SellCarComponent() {
     formData.append('crushed', crushed);
 
     if(customer === null) {
+      setModalTitle("You are not logged in");
+      setModalBody("If you want to sell a car, you need to login first.");
       openModal();
     } else {
       axios.post(BASE_URL + "/add-new-car", formData, {
         headers: customer
       })
         .then((response) => {
-          alert("File successfully uploaded.");
-          console.log(response);
+          setModalTitle("Ad successfully saved");
+          setModalBody("Your car was successfully added to list");
+          openModal();
         });
     }
   }
 
   const openModal = () => {
-    setCustomerNotLoggedIn(true);
+    setModalWindow(true);
   }
 
   const closeModal = () => {
-    setCustomerNotLoggedIn(false);
+    setModalWindow(false);
+    if (modalTitle === "You are not logged in") {
+      navigate("/login");
+    } else if (modalTitle === "Ad successfully saved") {
+      navigate("/buy-car");
+    }
   }
 
   return (
@@ -201,15 +212,15 @@ function SellCarComponent() {
           </div>
         </div>
       </div>
-      {customerNotLoggedIn &&
+      {modalWindow &&
         <Modal open={() => {openModal()}} onClose={() => {closeModal()}} aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description">
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              You are not logged in
+              {modalTitle}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              If you want to sell a car, you need to login first.
+              {modalBody}
             </Typography>
           </Box>
         </Modal>}

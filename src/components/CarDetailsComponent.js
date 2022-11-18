@@ -61,8 +61,6 @@ function CarDetailsComponent() {
     }
     if(customerDetails === "") {
       getCurrentCustomer();
-    } else {
-      checkCustomerCarsList();
     }
   });
 
@@ -96,8 +94,9 @@ function CarDetailsComponent() {
       .then((response) => {
         if (response.status === 200) {
           setCustomerDetails(response.data);
+          checkCustomerCarsList(response.data.customerLikes);
         }
-      })
+      });
   }
 
   const addCarToFavourite = () => {
@@ -111,7 +110,7 @@ function CarDetailsComponent() {
           openModal();
           setAddedToFavourite(true);
         }
-      })
+      });
   }
 
   const removeCarFromFavourite = () => {
@@ -125,13 +124,12 @@ function CarDetailsComponent() {
           openModal();
           setAddedToFavourite(false);
         }
-      })
+      });
   }
 
-  const checkCustomerCarsList = () => {
-    let customerFavouriteCarsSet = customerDetails.customerLikes;
-    for (let i = 0; i < customerFavouriteCarsSet.length; i++) {
-      if (customerFavouriteCarsSet[i].carId === carDetails.carId) {
+  const checkCustomerCarsList = (customerLikedCarsSet) => {
+    for (let i = 0; i < customerLikedCarsSet.length; i++) {
+      if (customerLikedCarsSet[i].carId === carDetails.carId) {
         setAddedToFavourite(true);
         break;
       }
