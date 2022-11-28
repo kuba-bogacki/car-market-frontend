@@ -1,5 +1,5 @@
-import {useParams} from "react-router-dom";
-import {List, ListItemButton, ListItemIcon, ListItemText, Modal} from "@mui/material";
+import {useNavigate, useParams} from "react-router-dom";
+import {CircularProgress, List, ListItemButton, ListItemIcon, ListItemText, Modal, Stack} from "@mui/material";
 import EmojiTransportationIcon from '@mui/icons-material/EmojiTransportation';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -16,6 +16,9 @@ import authHeader from "../service/AuthHeader";
 import "../styles/CarDetailsComponentStyle.css"
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import KeysService from "../service/KeysService";
+import Stripe from "react-stripe-checkout";
+import CAR_LOGO from "../page-images/Car-logo.png";
 
 const BASE_URL = "http://localhost:8080";
 
@@ -37,6 +40,7 @@ function CarDetailsComponent() {
 
   const {carId} = useParams();
   const customer = authHeader();
+  const navigate = useNavigate();
 
   const [carDetails, setCarDetails] = useState("");
   const [formattedCarMileage, setFormattedCarMileage] = useState("");
@@ -50,6 +54,8 @@ function CarDetailsComponent() {
   const [modalTitle, setModalTitle] = useState("");
   const [modalBody, setModalBody] = useState("");
   const [customerDetails, setCustomerDetails] = useState("");
+  const [paymentInProgress, setPaymentInProgress] = useState(false);
+  const [lockForLoading, setLockForLoading] = useState(false);
 
   useEffect(() => {
     if(carLoaded === false) {
@@ -88,29 +94,37 @@ function CarDetailsComponent() {
   }
 
   const getCurrentCustomer = () => {
-    axios.get(BASE_URL + `/get-current-customer`, {
-      headers: customer
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          setCustomerDetails(response.data);
-          checkCustomerCarsList(response.data.customerLikes);
-        }
-      });
+    if (customer !== null) {
+      axios.get(BASE_URL + `/get-current-customer`, {
+        headers: customer
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setCustomerDetails(response.data);
+            checkCustomerCarsList(response.data.customerLikes);
+          }
+        });
+    }
   }
 
   const addCarToFavourite = () => {
-    axios.put(BASE_URL + `/add-car-to-favourite`, carDetails, {
-      headers: customer
-    })
-      .then((response) => {
-        if(response.status === 200) {
-          setModalTitle("Car saved");
-          setModalBody("You add this announcement to your favourite.");
-          openModal();
-          setAddedToFavourite(true);
-        }
-      });
+    if (customer !== null) {
+      axios.put(BASE_URL + `/add-car-to-favourite`, carDetails, {
+        headers: customer
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setModalTitle("Car saved");
+            setModalBody("You add this announcement to your favourite.");
+            openModal();
+            setAddedToFavourite(true);
+          }
+        });
+    } else {
+      setModalTitle("You are not logged in");
+      setModalBody("If you want to follow this ad, you need to login first.");
+      openModal();
+    }
   }
 
   const removeCarFromFavourite = () => {
@@ -124,6 +138,35 @@ function CarDetailsComponent() {
           openModal();
           setAddedToFavourite(false);
         }
+      });
+  }
+
+  const handleToken = (token) => {
+    setPaymentInProgress(true);
+    setLockForLoading(true);
+    let data = {
+      paymentAmount : carDetails.carPrice,
+      paymentToken : token.id,
+      carId : carDetails.carId
+    };
+    axios.post(BASE_URL + "/charge-customer", data, {
+      headers: customer
+    })
+      .then((response) => {
+        if(response.status === 200) {
+          setPaymentInProgress(false);
+          setLockForLoading(false);
+          setModalTitle("Payment success");
+          setModalBody("Your payment is successfully done.");
+          openModal();
+        }
+      })
+      .catch(() => {
+        setPaymentInProgress(false);
+        setLockForLoading(false);
+        setModalTitle("Payment success");
+        setModalBody("Something went wrong, please contact with support.");
+        openModal();
       });
   }
 
@@ -142,6 +185,11 @@ function CarDetailsComponent() {
 
   const closeModal = () => {
     setModalWindowForAddedToFavourite(false);
+    if (modalTitle === "You are not logged in") {
+      navigate("/login");
+    } else if (modalTitle === "Payment success") {
+      navigate("/buy-car");
+    }
   }
 
   const formatCarDetails = (carMileage, carType, engineType, carPrice) => {
@@ -267,15 +315,26 @@ function CarDetailsComponent() {
           </div>
           <div className="submit-button-div">
             {addedToFavourite ? (
-              <Button color="error" variant="contained" style={{marginRight: "15px"}} onClick={removeCarFromFavourite}>
+              <Button color="error" variant="contained" style={{marginRight: "15px"}}
+                      disabled={lockForLoading} onClick={removeCarFromFavourite}>
                 Remove from favourite
               </Button>
             ) : (
-              <Button color="primary" variant="contained" style={{marginRight: "15px"}} onClick={addCarToFavourite}>
+              <Button color="primary" variant="contained" style={{marginRight: "15px"}}
+                      disabled={lockForLoading} onClick={addCarToFavourite}>
                 Add to favourite
               </Button>
             )}
-            <Button color="success" variant="contained">Buy now</Button>
+            {carDetails.carSold === true ? (
+              <Button className="stripe-payment" color="success" variant="contained" disabled={true}>Car sold</Button>
+            ) : (
+              <Stripe
+                className="stripe-payment" label="Pay Now" name="Car Market" billingAddress shippingAddress
+                image={CAR_LOGO} description={`Your total is ${formattedCarPrice}`} panelLabel="Pay Now" currency="USD"
+                amount={parseInt(carDetails.carPrice + "00")} stripeKey={KeysService.getPublishStripeKey()} token={handleToken}
+                >
+              <Button className="stripe-payment" color="success" variant="contained" disabled={lockForLoading}>Buy now</Button>
+            </Stripe>)}
           </div>
         </div>
       </div>
@@ -291,6 +350,7 @@ function CarDetailsComponent() {
             </Typography>
           </Box>
         </Modal>}
+      {paymentInProgress && <CircularProgress color="inherit"/>}
     </div>
   );
 }
