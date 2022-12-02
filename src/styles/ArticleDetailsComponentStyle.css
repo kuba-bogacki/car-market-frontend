@@ -1,0 +1,51 @@
+.article-outer-div {
+  background-color: #aaa;
+  margin: 7rem 8rem 2rem 8rem;
+  height: 33rem;
+  border-radius: 4px;
+}
+
+.article-header {
+  padding-top: 2rem;
+}
+
+.article-inner-div {
+  margin: 0 2rem 0 2rem ;
+  padding: 1rem 0.5rem 2rem 0.5rem;
+  height: 26.5rem;
+  border-radius: 4px;
+}
+
+.article-details-header {
+  margin: 0 2rem 0.5rem 2rem ;
+  padding: 2rem 0.5rem 2rem 0.5rem;
+  height: 5.5rem;
+  border-radius: 4px;
+}
+
+.article-details-author-date {
+  margin: 0 2rem 0.5rem 45rem ;
+  padding: 0 0.5rem 0 0.5rem;
+  height: 1rem;
+  border-radius: 4px;
+}
+
+.article-details-body {
+  margin: 0 2rem 0 2rem ;
+  padding: 2rem 0.5rem 1rem 0.5rem;
+  height: 15.5rem;
+  border-radius: 4px;
+}
+
+.inline-paragraph-div {
+  display: inline-block;
+}
+
+.right-align-href {
+  float: right;
+}
+
+.href-redirect {
+  color: #2e7d32;
+  text-decoration: none;
+}

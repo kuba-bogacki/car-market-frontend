@@ -1,0 +1,30 @@
+.articles-outer-div {
+  background-color: #aaa;
+  margin: 7rem 8rem 2rem 8rem;
+  height: 35rem;
+  border-radius: 4px;
+}
+
+.articles-header {
+  padding-top: 2rem;
+}
+
+.articles-inner-div {
+  margin: 1rem 2rem 1rem 2rem ;
+  padding: 2rem 0.5rem 2rem 0.5rem;
+  height: 23.5rem;
+  border-radius: 4px;
+}
+
+.dialog-article-div {
+  margin: 1rem 2rem 1rem 2rem;
+}
+
+#paragraph-text {
+  display:inline-block;
+  margin-right:10px;
+}
+
+#paragraph-button {
+  display:inline-block;
+}

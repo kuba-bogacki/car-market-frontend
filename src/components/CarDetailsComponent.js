@@ -36,7 +36,7 @@ const style = {
 
 function CarDetailsComponent() {
 
-  const paddingStyle = {paddingTop: '4px'};
+  const paddingStyle = {paddingTop: '4px', opacity: "100%"};
 
   const {carId} = useParams();
   const customer = authHeader();
@@ -206,49 +206,49 @@ function CarDetailsComponent() {
         <div className="car-info-left">
           <div className="car-icons-details">
             <List dense sx={{width: '100%'}}>
-              <ListItemButton>
+              <ListItemButton disabled={true} style={{opacity: "100%"}}>
                 <ListItemIcon>
                   <EmojiTransportationIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary="Company"/>
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton disabled={true} style={{opacity: "100%"}}>
                 <ListItemIcon>
                   <DirectionsCarIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary="Model"/>
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton disabled={true} style={{opacity: "100%"}}>
                 <ListItemIcon>
                   <CalendarMonthIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary="Release year"/>
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton disabled={true} style={{opacity: "100%"}}>
                 <ListItemIcon>
                   <SpeedIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary="Mileage"/>
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton disabled={true} style={{opacity: "100%"}}>
                 <ListItemIcon>
                   <LocalShippingIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary="Type"/>
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton disabled={true} style={{opacity: "100%"}}>
                 <ListItemIcon>
                   <LocalGasStationIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary="Engine"/>
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton disabled={true} style={{opacity: "100%"}}>
                 <ListItemIcon>
                   <DangerousIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary="Crushed"/>
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton disabled={true} style={{opacity: "100%"}}>
                 <ListItemIcon>
                   <SellIcon fontSize="small"/>
                 </ListItemIcon>
@@ -258,49 +258,49 @@ function CarDetailsComponent() {
           </div>
           <div className="car-icon-parameters">
             <List dense sx={{width: '100%'}}>
-              <ListItemButton style={paddingStyle}>
+              <ListItemButton disabled={true} style={paddingStyle}>
                 <ListItemIcon>
                   <DoubleArrowIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary={carDetails.carCompany}/>
               </ListItemButton>
-              <ListItemButton style={paddingStyle}>
+              <ListItemButton disabled={true} style={paddingStyle}>
                 <ListItemIcon>
                   <DoubleArrowIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary={carDetails.carModel}/>
               </ListItemButton>
-              <ListItemButton style={paddingStyle}>
+              <ListItemButton disabled={true} style={paddingStyle}>
                 <ListItemIcon>
                   <DoubleArrowIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary={carDetails.carReleaseYear}/>
               </ListItemButton>
-              <ListItemButton style={paddingStyle}>
+              <ListItemButton disabled={true} style={paddingStyle}>
                 <ListItemIcon>
                   <DoubleArrowIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary={formattedCarMileage}/>
               </ListItemButton>
-              <ListItemButton style={paddingStyle}>
+              <ListItemButton disabled={true} style={paddingStyle}>
                 <ListItemIcon>
                   <DoubleArrowIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary={formattedCarType}/>
               </ListItemButton>
-              <ListItemButton style={paddingStyle}>
+              <ListItemButton disabled={true} style={paddingStyle}>
                 <ListItemIcon>
                   <DoubleArrowIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary={formattedEngineType}/>
               </ListItemButton>
-              <ListItemButton style={paddingStyle}>
+              <ListItemButton disabled={true} style={paddingStyle}>
                 <ListItemIcon>
                   <DoubleArrowIcon fontSize="small"/>
                 </ListItemIcon>
                 <ListItemText align="left" primary={(carDetails.carCrushed === false) ? "No" : "Yes"}/>
               </ListItemButton>
-              <ListItemButton style={paddingStyle}>
+              <ListItemButton disabled={true} style={paddingStyle}>
                 <ListItemIcon>
                   <DoubleArrowIcon fontSize="small"/>
                 </ListItemIcon>

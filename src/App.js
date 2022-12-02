@@ -14,6 +14,8 @@ import RegisterComponent from "./components/RegisterComponent";
 import CarDetailsComponent from "./components/CarDetailsComponent";
 import CustomerProfileComponent from "./components/CustomerProfileComponent";
 import StartingPageComponent from "./components/StartingPageComponent";
+import AddNewArticleComponent from "./components/AddNewArticleComponent";
+import ArticleDetailsComponent from "./components/ArticleDetailsComponent";
 
 function App() {
 
@@ -36,6 +38,8 @@ function App() {
               <Route path="/buy-car" element={<BuyCarComponent/>}></Route>
               <Route path="/sell-car" element={<SellCarComponent/>}></Route>
               <Route path="/articles" element={<ArticlesCarComponent/>}></Route>
+              <Route path="/article-details/:articleId" element={<ArticleDetailsComponent/>}></Route>
+              <Route path="/add-new-article" element={<AddNewArticleComponent/>}></Route>
               <Route path="/login" element={<LoginComponent/>}></Route>
               <Route path="/registration" element={<RegisterComponent/>}></Route>
               <Route path="/profile" element={<CustomerProfileComponent/>}></Route>
