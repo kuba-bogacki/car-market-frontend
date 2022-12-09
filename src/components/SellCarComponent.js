@@ -83,6 +83,9 @@ function SellCarComponent() {
   const [carPhoto, setCarPhoto] = useState(DEFAULT_CAR);
   const [modalTitle, setModalTitle] = useState("");
   const [modalBody, setModalBody] = useState("");
+  const [expandCarTypeAccordion, setExpandCarTypeAccordion] = useState(false);
+  const [expandEngineTypeAccordion, setExpandEngineTypeAccordion] = useState(false);
+  const [expandCarCrushedAccordion, setExpandCarCrushedAccordion] = useState(false);
 
   const fileSelectedHandler = (e) => {
     setCarPhoto(URL.createObjectURL(e.target.files[0]));
@@ -116,11 +119,35 @@ function SellCarComponent() {
           openModal();
         });
     }
-  }
+  };
+
+  const expandTypeAccordion = () => {
+    if(expandCarTypeAccordion === true) {
+      setExpandCarTypeAccordion(false);
+    } else {
+      setExpandCarTypeAccordion(true);
+    }
+  };
+
+  const expandEngineAccordion = () => {
+    if(expandEngineTypeAccordion === true) {
+      setExpandEngineTypeAccordion(false);
+    } else {
+      setExpandEngineTypeAccordion(true);
+    }
+  };
+
+  const expandCrushedAccordion = () => {
+    if(expandCarCrushedAccordion === true) {
+      setExpandCarCrushedAccordion(false);
+    } else {
+      setExpandCarCrushedAccordion(true);
+    }
+  };
 
   const openModal = () => {
     setModalWindow(true);
-  }
+  };
 
   const closeModal = () => {
     setModalWindow(false);
@@ -129,7 +156,7 @@ function SellCarComponent() {
     } else if (modalTitle === "Ad successfully saved") {
       navigate("/buy-car");
     }
-  }
+  };
 
   return (
     <div className="sell-car-div">
@@ -138,64 +165,73 @@ function SellCarComponent() {
         <div className="sell-car-info-left">
           <div className="sell-car-first-details">
             <CssTextField id="car-company" label="Company" variant="outlined" size="small" placeholder="E.g. Ford"
-                       style={cltField} onChange={(e) => setCarCompany(e.target.value)}/>
+                       style={cltField} onChange={(e) => setCarCompany(e.target.value)} fullWidth/>
             <CssTextField id="car-release-year" label="Release Year" variant="outlined" size="small" placeholder="YYYY"
-                       style={cltField} onChange={(e) => setCarReleaseYear(e.target.value)}/>
+                       style={cltField} onChange={(e) => setCarReleaseYear(e.target.value)} fullWidth/>
             <CssTextField id="car-price" label="Price" variant="outlined" placeholder="$" size="small"
-                       style={cltField} onChange={(e) => setCarPrice(e.target.value)}/>
+                       style={cltField} onChange={(e) => setCarPrice(e.target.value)} fullWidth/>
           </div>
           <div className="sell-car-second-details">
             <CssTextField id="car-model" label="Model" variant="outlined" size="small" placeholder="E.g. Mustang"
-                       style={cltField} onChange={(e) => setCarModel(e.target.value)}/>
+                       style={cltField} onChange={(e) => setCarModel(e.target.value)} fullWidth/>
             <CssTextField id="car-mileage" label="Mileage" variant="outlined" size="small" placeholder="Miles"
-                       style={cltField} onChange={(e) => setCarMileage(e.target.value)}/>
+                       style={cltField} onChange={(e) => setCarMileage(e.target.value)} fullWidth/>
           </div>
           <div className="sell-car-third-details">
-            <Accordion style={cltField}>
-              <AccordionSummary expandIcon={<ArrowDownwardIcon/>} aria-controls="panel1a-content" id="car-type-accordion">
-                <Typography>Type</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <FormControl>
-                  <RadioGroup aria-labelledby="car-type-radio-group" name="car-type-radio-group"
-                              onChange={(e) => setCarType(e.target.value)}>
-                    <FormControlLabel value="sedan" control={<Radio sx={radioSize} color="success"/>} label="Sedan"/>
-                    <FormControlLabel value="suv" control={<Radio sx={radioSize} color="success"/>} label="Suv"/>
-                    <FormControlLabel value="coupe" control={<Radio sx={radioSize} color="success"/>} label="Coupe"/>
-                    <FormControlLabel value="other" control={<Radio sx={radioSize} color="success"/>} label="Other"/>
-                  </RadioGroup>
-                </FormControl>
-              </AccordionDetails>
-            </Accordion><hr/>
-            <Accordion style={cltField}>
-              <AccordionSummary expandIcon={<ArrowDownwardIcon/>} aria-controls="panel1a-content" id="engine-type-accordion">
-                <Typography>Engine Type</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <FormControl>
-                  <RadioGroup aria-labelledby="engine-type-radio-group" name="engine-type-radio-group"
-                              onChange={(e) => setEngineType(e.target.value)}>
-                    <FormControlLabel value="electric" control={<Radio sx={radioSize} color="success"/>} label="Electric" />
-                    <FormControlLabel value="diesel" control={<Radio sx={radioSize} color="success"/>} label="Diesel" />
-                    <FormControlLabel value="gas" control={<Radio sx={radioSize} color="success"/>} label="Gas" />
-                  </RadioGroup>
-                </FormControl>
-              </AccordionDetails>
-            </Accordion><hr/>
-            <Accordion style={cltField}>
-              <AccordionSummary expandIcon={<ArrowDownwardIcon/>} aria-controls="panel1a-content" id="crushed-accordion">
-                <Typography>Crushed</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <FormControl>
-                  <RadioGroup aria-labelledby="crushed-radio-group" name="crushed-radio-group"
-                              onChange={(e) => setCrushed(e.target.value)}>
-                    <FormControlLabel value="true" control={<Radio sx={radioSize} color="success"/>} label="Yes" />
-                    <FormControlLabel value="false" control={<Radio sx={radioSize} color="success"/>} label="No" />
-                  </RadioGroup>
-                </FormControl>
-              </AccordionDetails>
-            </Accordion>
+            <div className="sell-car-component-car-type-div">
+              <Accordion style={cltField} expanded={expandCarTypeAccordion} onClick={() => {expandTypeAccordion()}}>
+                <AccordionSummary expandIcon={<ArrowDownwardIcon/>}
+                                  aria-controls="panel1a-content" id="car-type-accordion">
+                  <Typography>Type</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <FormControl>
+                    <RadioGroup aria-labelledby="car-type-radio-group" name="car-type-radio-group"
+                                onChange={(e) => {setCarType(e.target.value); setExpandCarTypeAccordion(false)}}>
+                      <FormControlLabel value="sedan" control={<Radio sx={radioSize} color="success"/>} label="Sedan"/>
+                      <FormControlLabel value="suv" control={<Radio sx={radioSize} color="success"/>} label="Suv"/>
+                      <FormControlLabel value="coupe" control={<Radio sx={radioSize} color="success"/>} label="Coupe"/>
+                      <FormControlLabel value="other" control={<Radio sx={radioSize} color="success"/>} label="Other"/>
+                    </RadioGroup>
+                  </FormControl>
+                </AccordionDetails>
+              </Accordion>
+            </div>
+            <div className="sell-car-component-engine-type-div">
+              <Accordion style={cltField} expanded={expandEngineTypeAccordion} onClick={() => {expandEngineAccordion()}}>
+                <AccordionSummary expandIcon={<ArrowDownwardIcon/>}
+                                  aria-controls="panel1a-content" id="engine-type-accordion">
+                  <Typography>Engine Type</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <FormControl>
+                    <RadioGroup aria-labelledby="engine-type-radio-group" name="engine-type-radio-group"
+                                onChange={(e) => {setEngineType(e.target.value); setExpandEngineTypeAccordion(false)}}>
+                      <FormControlLabel value="electric" control={<Radio sx={radioSize} color="success"/>} label="Electric" />
+                      <FormControlLabel value="diesel" control={<Radio sx={radioSize} color="success"/>} label="Diesel" />
+                      <FormControlLabel value="gas" control={<Radio sx={radioSize} color="success"/>} label="Gas" />
+                    </RadioGroup>
+                  </FormControl>
+                </AccordionDetails>
+              </Accordion>
+            </div>
+            <div className="sell-car-component-crushed-div">
+              <Accordion style={cltField} expanded={expandCarCrushedAccordion} onClick={() => {expandCrushedAccordion()}}>
+                <AccordionSummary expandIcon={<ArrowDownwardIcon/>}
+                                  aria-controls="panel1a-content" id="crushed-accordion">
+                  <Typography>Crushed</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <FormControl>
+                    <RadioGroup aria-labelledby="crushed-radio-group" name="crushed-radio-group"
+                                onChange={(e) => {setCrushed(e.target.value); setExpandCarCrushedAccordion(false)}}>
+                      <FormControlLabel value="true" control={<Radio sx={radioSize} color="success"/>} label="Yes" />
+                      <FormControlLabel value="false" control={<Radio sx={radioSize} color="success"/>} label="No" />
+                    </RadioGroup>
+                  </FormControl>
+                </AccordionDetails>
+              </Accordion>
+            </div>
           </div>
         </div>
         <div className="sell-car-info-right">

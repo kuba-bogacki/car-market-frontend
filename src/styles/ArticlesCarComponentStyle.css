@@ -10,10 +10,20 @@
 }
 
 .articles-inner-div {
+  background-color: #909090;
   margin: 1rem 2rem 1rem 2rem ;
-  padding: 2rem 0.5rem 2rem 0.5rem;
-  height: 23.5rem;
+  padding: 1rem 0.5rem 2rem 0.5rem;
+  height: 27.5rem;
   border-radius: 4px;
+}
+
+.add-new-article-div {
+  float: right;
+  margin-right: 1rem;
+}
+
+.articles-div-list {
+  margin-top: 3rem;
 }
 
 .dialog-article-div {

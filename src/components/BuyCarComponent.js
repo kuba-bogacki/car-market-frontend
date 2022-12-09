@@ -89,9 +89,16 @@ function BuyCarComponent() {
     }
   }
 
+  const openAdvancedSearch = () => {
+    navigate("/advanced-search");
+  }
+
   return (
     <div className="buy-car-div-component">
       <h1 className="buy-car-header">Cars for sale</h1><br/>
+      <div className="advanced-search-div">
+        <Button color="success" variant="contained" onClick={() => {openAdvancedSearch()}}>Advanced search</Button>
+      </div>
       <div className="table-div-inner">
         <TableContainer component={Paper}>
           <Table aria-label="customized table">

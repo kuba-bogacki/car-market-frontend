@@ -14,7 +14,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
-  min-height: 100vh;
+  min-height: 130vh;
   background: rgb(218,218,218);
   background: linear-gradient(0deg, rgba(218,218,218,1) 0%, rgba(89,89,89,1) 100%);
 
