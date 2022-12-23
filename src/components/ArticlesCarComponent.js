@@ -1,5 +1,5 @@
 import "../styles/ArticlesCarComponentStyle.css";
-import {Avatar, List, ListItem, ListItemAvatar, ListItemText} from "@mui/material";
+import {Avatar, List, ListItem, ListItemAvatar, ListItemText, Pagination, PaginationItem, Stack} from "@mui/material";
 import {useEffect, useState} from "react";
 import CAR_LOGO from "../page-images/Green-sports-car.png";
 import axios from "axios";
@@ -12,10 +12,21 @@ function ArticlesCarComponent() {
 
   const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const articlePerPage = 4;
+  const indexOfLastArticle = currentPage * articlePerPage;
+  const indexOfFirstArticle = indexOfLastArticle - articlePerPage;
+  const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle);
+  const numberOfPages = Math.ceil(articles.length / articlePerPage);
 
   useEffect(() => {
     getAllArticles();
   }, []);
+
+  const paginateArticles = (target, value) => {
+    setCurrentPage(value);
+  };
 
   const getAllArticles = () => {
     axios.get(BASE_URL + "/get-all-articles")
@@ -25,7 +36,7 @@ function ArticlesCarComponent() {
       .catch((error) => {
         console.log(error);
       })
-  }
+  };
 
   const openArticleEditor = () => {
     navigate("/add-new-article");
@@ -40,7 +51,7 @@ function ArticlesCarComponent() {
         </div>
         <div className="articles-div-list">
           <List dense sx={{ width: '100%' }}>
-            {articles.map((article, index) => (
+            {currentArticles.map((article, index) => (
               <ListItem key={index} style={{marginBottom: "0.5rem"}}>
                 <ListItemAvatar>
                   <Avatar alt={`Avatar nr 1`} src={CAR_LOGO}/>
@@ -58,6 +69,11 @@ function ArticlesCarComponent() {
             ))}
           </List>
         </div>
+      </div>
+      <div className="articles-pagination-div">
+        <Stack className="articles-pagination-stack" spacing={2}>
+          <Pagination className="articles-center-pagination-div" count={numberOfPages} color="success" onChange={paginateArticles}/>
+        </Stack>
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
+import "../styles/SellCarComponentStyle.css";
 import {
   Accordion,
   AccordionDetails,
-  AccordionSummary,
+  AccordionSummary, Autocomplete,
   FormControl,
   FormControlLabel,
   Modal,
@@ -10,17 +11,17 @@ import {
   styled,
   TextField
 } from "@mui/material";
+import {carCompany as carCompanyList, carModel as carModelList} from "../service/CarService";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import * as PropTypes from "prop-types";
-import {useState} from "react";
-import DEFAULT_CAR from "../page-images/Default_car.png";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import authHeader from "../service/AuthHeader";
-import "../styles/SellCarComponentStyle.css";
-import {useNavigate} from "react-router-dom";
+import DEFAULT_CAR from "../page-images/Default_car.png";
 
 const BASE_URL = "http://localhost:8080";
 
@@ -90,7 +91,7 @@ function SellCarComponent() {
   const fileSelectedHandler = (e) => {
     setCarPhoto(URL.createObjectURL(e.target.files[0]));
     setSelectedFile(e.target.files[0]);
-  }
+  };
 
   const uploadFile = (selectedFile) => {
     let formData = new FormData();
@@ -113,7 +114,7 @@ function SellCarComponent() {
       axios.post(BASE_URL + "/add-new-car", formData, {
         headers: customer
       })
-        .then((response) => {
+        .then(() => {
           setModalTitle("Ad successfully saved");
           setModalBody("Your car was successfully added to list");
           openModal();
@@ -164,18 +165,24 @@ function SellCarComponent() {
       <div className="sell-car-inner-div">
         <div className="sell-car-info-left">
           <div className="sell-car-first-details">
-            <CssTextField id="car-company" label="Company" variant="outlined" size="small" placeholder="E.g. Ford"
-                       style={cltField} onChange={(e) => setCarCompany(e.target.value)} fullWidth/>
+            <Autocomplete id="free-solo-demo" freeSolo options={carCompanyList.map((option) => option.company)}
+              onChange={(e, newValue) => {setCarCompany(newValue)}} renderInput={(params) =>
+                <CssTextField {...params} id="car-company" label="Company" variant="outlined" size="small"
+                        placeholder="E.g. Ford" style={cltField} onChange={(e) => setCarCompany(e.target.value)} fullWidth/>}
+            />
             <CssTextField id="car-release-year" label="Release Year" variant="outlined" size="small" placeholder="YYYY"
-                       style={cltField} onChange={(e) => setCarReleaseYear(e.target.value)} fullWidth/>
+                        style={cltField} onChange={(e) => setCarReleaseYear(e.target.value)} fullWidth/>
             <CssTextField id="car-price" label="Price" variant="outlined" placeholder="$" size="small"
-                       style={cltField} onChange={(e) => setCarPrice(e.target.value)} fullWidth/>
+                        style={cltField} onChange={(e) => setCarPrice(e.target.value)} fullWidth/>
           </div>
           <div className="sell-car-second-details">
-            <CssTextField id="car-model" label="Model" variant="outlined" size="small" placeholder="E.g. Mustang"
-                       style={cltField} onChange={(e) => setCarModel(e.target.value)} fullWidth/>
+            <Autocomplete id="free-solo-demo" freeSolo options={carModelList.map((option) => option.model)}
+              onChange={(e, newValue) => {setCarModel(newValue)}} renderInput={(params) =>
+                <CssTextField {...params} id="car-model" label="Model" variant="outlined" size="small"
+                        placeholder="E.g. Mustang" style={cltField} onChange={(e) => setCarModel(e.target.value)} fullWidth/>}
+            />
             <CssTextField id="car-mileage" label="Mileage" variant="outlined" size="small" placeholder="Miles"
-                       style={cltField} onChange={(e) => setCarMileage(e.target.value)} fullWidth/>
+                        style={cltField} onChange={(e) => setCarMileage(e.target.value)} fullWidth/>
           </div>
           <div className="sell-car-third-details">
             <div className="sell-car-component-car-type-div">

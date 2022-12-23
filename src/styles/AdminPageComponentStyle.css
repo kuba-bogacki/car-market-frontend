@@ -1,0 +1,51 @@
+.admin-page-outer-div {
+  background-color: #aaa;
+  margin: 7rem 2.5rem 2rem 2.5rem;
+  padding: 0 1rem 0 1rem;
+  height: 47.5rem;
+  border-radius: 4px;
+}
+
+.admin-page-header {
+  padding-top: 2rem;
+}
+
+.admin-page-inner-left-div {
+  background-color: #909090;
+  float: left;
+  margin-left: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  height: 36rem;
+  width: 47%;
+  border-radius: 4px;
+}
+
+.admin-page-list-div {
+  margin: 0 2rem 0 2rem;
+  max-height: 14rem;
+}
+
+.admin-page-inner-right-div {
+  background-color: #909090;
+  float: right;
+  margin-right: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  height: 36rem;
+  width: 47%;
+  border-radius: 4px;
+}
+
+.admin-page-list::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.admin-page-list::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.admin-page-list::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}

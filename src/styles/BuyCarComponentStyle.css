@@ -1,12 +1,11 @@
 .buy-car-div-component {
     background-color: #aaa;
     margin: 7rem 2.5rem 2rem 2.5rem;
-    height: 35rem;
+    height: 36rem;
     border-radius: 4px;
 }
 
 .advanced-search-div {
-    background-color: #556cd6;
     margin: 0 2rem 1rem 1rem;
     float: right;
 }
@@ -28,4 +27,18 @@
 
 .table-row-link:hover {
     background-color: #808085;
+}
+
+.buy-car-pagination-div {
+    margin: 12rem 1rem 1rem 1rem;
+}
+
+.buy-car-pagination-stack {
+    width: 25rem;
+    margin: 0 auto;
+}
+
+.buy-car-center-pagination-div {
+    display: flex;
+    justify-content: center;
 }

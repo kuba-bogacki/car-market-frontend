@@ -1,7 +1,7 @@
 .articles-outer-div {
   background-color: #aaa;
   margin: 7rem 8rem 2rem 8rem;
-  height: 35rem;
+  height: 34rem;
   border-radius: 4px;
 }
 
@@ -13,7 +13,7 @@
   background-color: #909090;
   margin: 1rem 2rem 1rem 2rem ;
   padding: 1rem 0.5rem 2rem 0.5rem;
-  height: 27.5rem;
+  height: 25rem;
   border-radius: 4px;
 }
 
@@ -28,6 +28,20 @@
 
 .dialog-article-div {
   margin: 1rem 2rem 1rem 2rem;
+}
+
+.articles-pagination-div {
+  margin: 1rem 1rem 1rem 1rem;
+}
+
+.articles-pagination-stack {
+  width: 25rem;
+  margin: 0 auto;
+}
+
+.articles-center-pagination-div {
+  display: flex;
+  justify-content: center;
 }
 
 #paragraph-text {

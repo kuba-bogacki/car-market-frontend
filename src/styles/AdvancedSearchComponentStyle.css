@@ -40,7 +40,13 @@
   height: 4rem;
 }
 
-.car-inline-input-div,
+.car-inline-input-div {
+  margin: 1rem 1rem 1rem 2rem;
+  display: inline-block;
+  float: left;
+  width: 40%;
+}
+
 .car-inline-release-year-div,
 .car-inline-mileage-div,
 .car-inline-price-div {
@@ -53,12 +59,6 @@
 .car-component-engine-type-div,
 .car-component-crushed-div {
   margin: 0 3rem 0.2rem 3rem;
-}
-
-.submit-search-button-div {
-  /*padding-top: 1rem;*/
-  /*margin: 1rem 2rem 0 2rem;*/
-  /*float: right;*/
 }
 
 .accordions-group-div {

@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {CircularProgress, List, ListItemButton, ListItemIcon, ListItemText, Modal, Stack} from "@mui/material";
+import {CircularProgress, List, ListItemButton, ListItemIcon, ListItemText, Modal} from "@mui/material";
 import EmojiTransportationIcon from '@mui/icons-material/EmojiTransportation';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -80,7 +80,7 @@ function CarDetailsComponent() {
           setCarLoaded(true);
         }
       });
-  }
+  };
 
   const getCarImage = (imageName) => {
     axios.get(BASE_URL + `/get-car-image/${imageName}`, {
@@ -91,7 +91,7 @@ function CarDetailsComponent() {
           setCarImage(response.data);
         }
       });
-  }
+  };
 
   const getCurrentCustomer = () => {
     if (customer !== null) {
@@ -105,7 +105,7 @@ function CarDetailsComponent() {
           }
         });
     }
-  }
+  };
 
   const addCarToFavourite = () => {
     if (customer !== null) {
@@ -125,7 +125,7 @@ function CarDetailsComponent() {
       setModalBody("If you want to follow this ad, you need to login first.");
       openModal();
     }
-  }
+  };
 
   const removeCarFromFavourite = () => {
     axios.put(BASE_URL + `/remove-car-from-favourite`, carDetails, {
@@ -139,7 +139,7 @@ function CarDetailsComponent() {
           setAddedToFavourite(false);
         }
       });
-  }
+  };
 
   const handleToken = (token) => {
     setPaymentInProgress(true);
@@ -168,7 +168,7 @@ function CarDetailsComponent() {
         setModalBody("Something went wrong, please contact with support.");
         openModal();
       });
-  }
+  };
 
   const checkCustomerCarsList = (customerLikedCarsSet) => {
     for (let i = 0; i < customerLikedCarsSet.length; i++) {
@@ -177,11 +177,11 @@ function CarDetailsComponent() {
         break;
       }
     }
-  }
+  };
 
   const openModal = () => {
     setModalWindowForAddedToFavourite(true);
-  }
+  };
 
   const closeModal = () => {
     setModalWindowForAddedToFavourite(false);
@@ -190,14 +190,14 @@ function CarDetailsComponent() {
     } else if (modalTitle === "Payment success") {
       navigate("/buy-car");
     }
-  }
+  };
 
   const formatCarDetails = (carMileage, carType, engineType, carPrice) => {
     setFormattedCarMileage(carMileage.toLocaleString() + " M");
     setFormattedCarType(carType.slice(0, 1) + carType.slice(1).toLowerCase());
     setFormattedEngineType(engineType.slice(0, 1) + engineType.slice(1).toLowerCase());
     setFormattedCarPrice(carPrice.toLocaleString() + " $");
-  }
+  };
 
   return (
     <div className="car-details-div">
@@ -311,7 +311,7 @@ function CarDetailsComponent() {
         </div>
         <div className="car-info-right">
           <div className="car-photo">
-            <img src={"data:image/png;base64," + carImage} className="car-photo-inner" alt="car-image"/>
+            <img src={"data:image/png;base64," + carImage} className="car-photo-inner" alt="car"/>
           </div>
           <div className="submit-button-div">
             {addedToFavourite ? (

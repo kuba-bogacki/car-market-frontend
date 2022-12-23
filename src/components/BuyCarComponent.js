@@ -1,5 +1,6 @@
 import {
-  Paper,
+  Pagination,
+  Paper, Stack,
   styled,
   Table,
   TableBody,
@@ -38,6 +39,13 @@ function BuyCarComponent() {
   const [carsList, setCarsList] = useState([]);
   const [carsLoaded, setCarsLoaded] = useState(false);
   const [sortedAsc, setSortedAsc] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const carsPerPage = 5;
+  const indexOfLastCar = currentPage * carsPerPage;
+  const indexOfFirstCar = indexOfLastCar - carsPerPage;
+  const currentCar = carsList.slice(indexOfFirstCar, indexOfLastCar);
+  const numberOfPages = Math.ceil(carsList.length / carsPerPage);
 
   useEffect(() => {
     if (carsLoaded === false) {
@@ -87,11 +95,15 @@ function BuyCarComponent() {
       setCarsList(ascendingCarsList);
       setSortedAsc(false);
     }
-  }
+  };
 
   const openAdvancedSearch = () => {
     navigate("/advanced-search");
-  }
+  };
+
+  const paginateCars = (target, value) => {
+    setCurrentPage(value);
+  };
 
   return (
     <div className="buy-car-div-component">
@@ -122,7 +134,7 @@ function BuyCarComponent() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {carsList.map((car, index) => (
+              {currentCar.map((car, index) => (
                 <TableRow className="table-row-link" key={index} onClick={() => {showCarDetails(car)}}>
                   <StyledTableCell align="center"><h4>{index + 1}</h4></StyledTableCell>
                   <StyledTableCell align="center"><h4>{car.carCompany}</h4></StyledTableCell>
@@ -134,6 +146,11 @@ function BuyCarComponent() {
             </TableBody>
           </Table>
         </TableContainer>
+      </div>
+      <div className="buy-car-pagination-div">
+        <Stack className="buy-car-pagination-stack" spacing={2}>
+          <Pagination className="buy-car-center-pagination-div" count={numberOfPages} color="success" onChange={paginateCars}/>
+        </Stack>
       </div>
     </div>
   );

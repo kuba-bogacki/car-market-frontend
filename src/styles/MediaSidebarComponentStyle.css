@@ -1,0 +1,30 @@
+.sidebar-nav a {
+  position: fixed;
+  left: -50px;
+  transition: 0.3s;
+  padding: 15px;
+  width: 4rem;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  border-radius: 0 5px 5px 0;
+}
+
+.sidebar-nav a:hover {
+  left: 0;
+}
+
+#facebook {
+  margin-top: 10rem;
+  background-color: #4267B2;
+}
+
+#twitter {
+  margin-top: 15rem;
+  background-color: #1DA1F2;
+}
+
+#instagram {
+  margin-top: 20rem;
+  background-color: #E1306C;
+}

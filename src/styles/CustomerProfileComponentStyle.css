@@ -48,6 +48,10 @@
     border-radius: 4px;
 }
 
+.admin-page-button {
+    margin: 6rem 1.5rem 1.5rem 1.5rem;
+}
+
 span.customer-profile-inline-span {
     display: inline;
 }

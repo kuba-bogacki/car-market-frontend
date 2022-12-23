@@ -2,7 +2,7 @@ import "../styles/AdvancedSearchComponentStyle.css";
 import {
   Accordion,
   AccordionDetails,
-  AccordionSummary,
+  AccordionSummary, Autocomplete,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -27,6 +27,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {carCompany as carCompanyList, carModel as carModelList} from "../service/CarService";
 
 const BASE_URL = "http://localhost:8080";
 const style = {
@@ -40,6 +41,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "black",
@@ -49,6 +51,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }));
+
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
     color: 'green',
@@ -65,6 +68,7 @@ const CssTextField = styled(TextField)({
     },
   },
 });
+
 const fontStyle = {color: '#F8F8F8', borderColor: 'black'};
 const radioSize = {'& .MuiSvgIcon-root': {fontSize: 10}, textAlign: "left"};
 const cltField = {backgroundColor: '#F8F8F8', borderRadius: '4px', textAlign: "left"};
@@ -80,11 +84,11 @@ function AdvancedSearchComponent() {
   const [carReleaseYear, setCarReleaseYear] = useState([1980, 1985]);
   const [carMileage, setCarMileage] = useState([0, 10000]);
   const [carPrice, setCarPrice] = useState([0, 100000]);
-  const [carType, setCarType] = useState({sedan : true, suv : true, coupe : true, other : true});
+  const [carType, setCarType] = useState({sedan : false, suv : false, coupe : false, other : false});
   const {sedan, suv, coupe, other} = carType;
-  const [engineType, setEngineType] = useState({electric : true, diesel : true, gas : true});
+  const [engineType, setEngineType] = useState({electric : false, diesel : false, gas : false});
   const {electric, diesel, gas} = engineType;
-  const [crushed, setCrushed] = useState({yes : true, no : true});
+  const [crushed, setCrushed] = useState({yes : false, no : false});
   const {yes, no} = crushed;
   const [validationError, setValidationError] = useState(false);
   const [modalHeader, setModalHeader] = useState("");
@@ -135,7 +139,25 @@ function AdvancedSearchComponent() {
     setCrushed({...crushed, [event.target.name]: event.target.checked});
   };
 
+  const valueReleaseYearFormat = (value) => {
+    const units = "Year";
+    return `${value} ${units}`;
+  };
+
+  const valueMileageFormat = (value) => {
+    const units = "Miles";
+    const miles = value.toLocaleString();
+    return `${miles} ${units}`;
+  };
+
+  const valuePriceFormat = (value) => {
+    const units = "USD";
+    const price = value.toLocaleString();
+    return `${price} ${units}`;
+  };
+
   const findSearchedCars = () => {
+
     const data = {
       carCompany: carCompany,
       carModel: carModel,
@@ -147,29 +169,20 @@ function AdvancedSearchComponent() {
       crushedArray: crushed
     };
 
-    console.log(data);
-
-    if(carCompany === "" || carModel === "") {
-      setModalHeader("Provide all parameters");
-      setModalBody("If you want to find cars you need to provide company and car model first.")
-      openModal();
-    } else {
-      axios.put(BASE_URL + "/get-advanced-search-cars", data)
-        .then((response) => {
-          if(response.status === 200) {
-            setCarsList(response.data);
-            console.log(response.data);
-            if(response.data.length === 0) {
-              setModalHeader("No car found");
-              setModalBody("No one car fit to chosen parameters.")
-              openModal();
-            }
+    axios.put(BASE_URL + "/get-advanced-search-cars", data)
+      .then((response) => {
+        if(response.status === 200) {
+          setCarsList(response.data);
+          if(response.data.length === 0) {
+            setModalHeader("No car found");
+            setModalBody("No one car fit to chosen parameters.")
+            openModal();
           }
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    }
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   const showCarDetails = (car) => {
@@ -190,12 +203,18 @@ function AdvancedSearchComponent() {
       <div className="advanced-search-inner-left-div">
         <div className="car-component-input-div">
           <div className="car-inline-input-div">
-            <CssTextField className="car-company" label="Company" variant="outlined" size="small" placeholder="E.g. Ford"
-                          style={cltField} onChange={(e) => setCarCompany(e.target.value)}/>
+            <Autocomplete id="free-solo-demo" freeSolo options={carCompanyList.map((option) => option.company)}
+              onChange={(e, newValue) => {setCarCompany(newValue)}} renderInput={(params) =>
+              <CssTextField {...params} className="car-input-field" label="Company" variant="outlined" size="small"
+                            placeholder="E.g. Ford" style={cltField} onChange={(e) => setCarCompany(e.target.value)}/>}
+            />
           </div>
           <div className="car-inline-input-div">
-            <CssTextField className="car-company" label="Model" variant="outlined" size="small" placeholder="E.g. Escort"
-                          style={cltField} onChange={(e) => setCarModel(e.target.value)}/>
+            <Autocomplete id="free-solo-demo" freeSolo options={carModelList.map((option) => option.model)}
+              onChange={(e, newValue) => {setCarModel(newValue)}} renderInput={(params) =>
+              <CssTextField {...params} className="car-input-field" label="Model" variant="outlined" size="small"
+                            placeholder="E.g. Escort" style={cltField} onChange={(e) => setCarModel(e.target.value)}/>}
+            />
           </div>
         </div>
         <div className="car-component-release-year-div">
@@ -207,7 +226,7 @@ function AdvancedSearchComponent() {
           <div className="car-inline-release-year-div">
             <Box sx={{ width: 320 }}>
               <Slider value={carReleaseYear} min={1980} max={2022} valueLabelDisplay="auto"
-                      color="success" disableSwap onChange={changeCarReleaseYear}/>
+                      valueLabelFormat={valueReleaseYearFormat} color="success" disableSwap onChange={changeCarReleaseYear}/>
             </Box>
           </div>
         </div>
@@ -220,7 +239,7 @@ function AdvancedSearchComponent() {
           <div className="car-inline-mileage-div">
             <Box sx={{ width: 320 }}>
               <Slider value={carMileage} min={0} max={100000} valueLabelDisplay="auto"
-                      color="success" disableSwap onChange={changeCarMileage}/>
+                      valueLabelFormat={valueMileageFormat} color="success" disableSwap onChange={changeCarMileage}/>
             </Box>
           </div>
         </div>
@@ -233,7 +252,7 @@ function AdvancedSearchComponent() {
           <div className="car-inline-price-div">
             <Box sx={{ width: 320 }}>
               <Slider value={carPrice} min={0} max={1000000} valueLabelDisplay="auto"
-                      color="success" disableSwap onChange={changeCarPrice}/>
+                      valueLabelFormat={valuePriceFormat} color="success" disableSwap onChange={changeCarPrice}/>
             </Box>
           </div>
         </div>

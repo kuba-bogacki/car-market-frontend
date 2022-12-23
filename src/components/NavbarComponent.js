@@ -33,33 +33,33 @@ function NavbarComponent() {
     listClassName === "nav-menu active" ?
       setListClassName("nav-menu") : setListClassName("nav-menu active");
     openMenuIcon ? setOpenMenuIcon(false) : setOpenMenuIcon(true);
-  }
+  };
 
   const buyCar = () => {
     navigate('/buy-car');
-  }
+  };
 
   const sellCar = () => {
     navigate('/sell-car');
-  }
+  };
 
   const showArticles = () => {
     navigate('/articles');
-  }
+  };
 
   const showCustomerProfile = () => {
     navigate('/profile');
-  }
+  };
 
   const loginPage = () => {
     navigate('/login');
-  }
+  };
 
   const logoutPage = () => {
     AuthService.logout();
     navigate('/');
     window.location.reload();
-  }
+  };
 
   return (
     <nav className="navbar-items">
@@ -104,4 +104,4 @@ function NavbarComponent() {
   );
 }
 
-export default NavbarComponent
+export default NavbarComponent;

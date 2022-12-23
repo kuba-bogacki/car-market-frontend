@@ -1,5 +1,6 @@
 .footer-div-component {
     position: fixed;
+    /*position: relative;*/
     bottom: 2px;
     color: #FFFFFF;
     align-items: center;
